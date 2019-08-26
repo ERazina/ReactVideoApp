@@ -1,15 +1,35 @@
-import React from 'react';
+import React, { Component }from 'react';
 import ReactDOM from 'react-dom';
-import { Provider } from 'react-redux';
-import { createStore, applyMiddleware } from 'redux';
+import YTSearch from 'youtube-api-search';
+import SearchBar from './components/search_bar';
+import  API_KEY from './constants/constants';
 
-import App from './components/app';
-import reducers from './reducers';
+const key = API_KEY;
 
-const createStoreWithMiddleware = applyMiddleware()(createStore);
 
-ReactDOM.render(
-  <Provider store={createStoreWithMiddleware(reducers)}>
-    <App />
-  </Provider>
-  , document.querySelector('.container'));
+class App extends Component{
+
+  constructor(props){
+    super(props);
+
+    this.state = {
+      videos: []
+    }
+
+    YTSearch({key: key, value: 'surfboards'}, (data) => {
+      this.setState({videos: data});
+      console.log(this.state.videos)
+    });
+
+
+  }
+  render(){
+    return(
+      <div>
+        <SearchBar />
+      </div>
+    );
+  }
+}
+
+ReactDOM.render(<SearchBar />, document.querySelector('.container'));
