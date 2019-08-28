@@ -14,7 +14,7 @@ class VideoList extends React.Component{
     render(){
         const videoList = this.props.video.map((item) => {
             // console.log(item.snippet.thumbnails.default.url)
-            return <VideoListItem key={item.etag} video={item}/>
+            return (<VideoListItem onVideoSelect={this.props.onVideoSelect} key={item.etag} video={item}/>)
         });
 
         return(
